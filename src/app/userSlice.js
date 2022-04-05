@@ -2,36 +2,56 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authApi from "../api/authApi";
 
 export const login = createAsyncThunk(
-	"user/logIn",
+	"user/login",
 	async (params, thunkAPI) => {
 		const response = await authApi.login(params);
 
-		console.log(response);
-		// const { access_token, token_type, expired_at } = response;
-		// const accessToken = `${token_type} ${access_token}`;
-		// localStorage.setItem("access_token", accessToken);
-		// localStorage.setItem("expired_at", expired_at);
+		const token = response.tokens;
+		const userInformation = response.user;
+
+		if (token) {
+			localStorage.setItem("access_token", token.access.token);
+			localStorage.setItem("refresh_token", token.refresh.token);
+			localStorage.setItem("role", response.user.role);
+		}
+
+		return userInformation;
 	}
 );
 
-const initialState = {
-	entities: [],
-	loading: "idle",
-};
-
 const userSlice = createSlice({
 	name: "user",
-	initialState,
+	initialState: {
+		current: {},
+		loading: false,
+		error: "",
+	},
 	reducers: {},
-	extraReducers: (builder) => {
-		// Add reducers for additional action types here, and handle loading state as needed
-		builder.addCase(login.fulfilled, (state, action) => {
-			// Add user to the state array
-			state.entities.push(action.payload);
-		});
+	extraReducers: {
+		// [register.fulfilled]: (state, action) => {
+		// 	state.isLoggedIn = false;
+		// },
+		// [register.rejected]: (state, action) => {
+		// 	state.isLoggedIn = false;
+		// },
+		[login.pending]: (state) => {
+			state.loading = true;
+		},
+		[login.fulfilled]: (state, action) => {
+			state.current = action.payload;
+			state.loading = false;
+		},
+		[login.rejected]: (state, action) => {
+			state.loading = false;
+			state.error = action.error;
+		},
+		// [logout.fulfilled]: (state, action) => {
+		// 	state.isLoggedIn = false;
+		// 	state.user = null;
+		// },
 	},
 });
 
-const { reducer: userReducer, actions } = userSlice;
+const { reducer, actions } = userSlice;
 export const {} = actions;
-export default userReducer;
+export default reducer;

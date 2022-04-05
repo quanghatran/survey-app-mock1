@@ -1,6 +1,6 @@
 import { Typography } from "antd";
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import NotFound from "../../components/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -9,10 +9,12 @@ import ForgotPassword from "./pages/ForgotPassword";
 import { useDispatch } from "react-redux";
 import { login } from "../../app/userSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
-export default function AuthComponent() {
+export default function Auth() {
 	const { Title } = Typography;
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const handleLogin = async (values) => {
 		if (!values) return;
@@ -24,18 +26,16 @@ export default function AuthComponent() {
 			};
 
 			const loginResult = await dispatch(login(payload));
-			unwrapResult(loginResult);
+			const result = unwrapResult(loginResult);
 
-			console.log(loginResult);
+			console.log("result: ", result);
 
-			//  // Usually, we have a getMe() endpoint to fully fetch all information needed for current logged in user
+			// Usually, we have a getMe() endpoint to fully fetch all information needed for current logged in user
 			//  const getMeResult = await dispatch(getMe());
 			//  const loggedInUser = unwrapResult(resultAction); // MUST HAVE THIS LINE TO CATCH ERROR
-			//  console.log({loggedInUser});
-
-			// history.push('/success-url-after-sign-in');
+			navigate("/admin");
 		} catch (error) {
-			console.log("Failed to sign in : ", error);
+			console.log("Failed to login : ", error);
 		}
 	};
 
