@@ -1,0 +1,19 @@
+.topMenuWrapper {
+	padding: 20px 40px;
+	display: flex;
+	justify-content: space-between;
+	background: url(../assets/images/top-bg.jpg) no-repeat center;
+	background-size: cover;
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0);
+	box-sizing: border-box;
+}
+
+.buttonLogout {
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.userName {
+	font-weight: bold;
+	font-style: italic;
+}

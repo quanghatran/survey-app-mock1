@@ -1,12 +1,12 @@
 import { LockOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Typography } from "antd";
+import { Button, Checkbox, Form, Input, Spin, Typography } from "antd";
 import React from "react";
 import { NavLink } from "react-router-dom";
 // import "./login.scss";
 
 export default function Login(props) {
 	const { Title } = Typography;
-	const { namePage, onRegisterFinish } = props;
+	const { namePage, onRegisterFinish, isLoadingRegister } = props;
 
 	const onFinish = (values) => {
 		onRegisterFinish(values);
@@ -85,6 +85,7 @@ export default function Login(props) {
 						<NavLink to='/auth/login'>Already have an account?</NavLink>
 					</span>
 				</Form.Item>
+				{isLoadingRegister && <Spin tip='Loading...' />}
 			</Form>
 		</div>
 	);

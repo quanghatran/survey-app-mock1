@@ -1,4 +1,9 @@
-import { POST_LOGIN, POST_LOGOUT, POST_REGISTER } from "../constants/auth";
+import {
+	POST_LOGIN,
+	POST_LOGOUT,
+	POST_REFRESH_TOKEN,
+	POST_REGISTER,
+} from "../constants/auth";
 import axiosClient from "./axiosClient";
 
 const authApi = {
@@ -17,7 +22,10 @@ const authApi = {
 		return axiosClient.post(url, payload);
 	},
 
-	// refresh token
+	refreshToken: async (payload) => {
+		const url = POST_REFRESH_TOKEN;
+		return axiosClient.post(url, payload);
+	},
 };
 
 export default authApi;

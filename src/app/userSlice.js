@@ -13,9 +13,38 @@ export const login = createAsyncThunk(
 			localStorage.setItem("access_token", token.access.token);
 			localStorage.setItem("refresh_token", token.refresh.token);
 			localStorage.setItem("role", response.user.role);
+			localStorage.setItem("user_name", response.user.username);
+			localStorage.setItem("avatar", response.user.avatar);
 		}
 
 		return userInformation;
+	}
+);
+
+export const register = createAsyncThunk(
+	"user/register",
+	async (params, thunkAPI) => {
+		const response = await authApi.register(params);
+
+		const token = response.tokens;
+		const userInformation = response.user;
+
+		if (token) {
+			localStorage.setItem("access_token", token.access.token);
+			localStorage.setItem("refresh_token", token.refresh.token);
+			localStorage.setItem("role", response.user.role);
+			localStorage.setItem("user_name", response.user.username);
+			localStorage.setItem("avatar", response.user.avatar);
+		}
+
+		return userInformation;
+	}
+);
+
+export const logout = createAsyncThunk(
+	"user/logout",
+	async (params, thunkAPI) => {
+		await authApi.logout(params);
 	}
 );
 
@@ -28,12 +57,20 @@ const userSlice = createSlice({
 	},
 	reducers: {},
 	extraReducers: {
-		// [register.fulfilled]: (state, action) => {
-		// 	state.isLoggedIn = false;
-		// },
-		// [register.rejected]: (state, action) => {
-		// 	state.isLoggedIn = false;
-		// },
+		// register process
+		[register.pending]: (state) => {
+			state.loading = true;
+		},
+		[register.fulfilled]: (state, action) => {
+			state.current = action.payload;
+			state.loading = false;
+		},
+		[register.rejected]: (state, action) => {
+			state.loading = false;
+			state.error = action.error;
+		},
+
+		// login process
 		[login.pending]: (state) => {
 			state.loading = true;
 		},
@@ -45,10 +82,12 @@ const userSlice = createSlice({
 			state.loading = false;
 			state.error = action.error;
 		},
-		// [logout.fulfilled]: (state, action) => {
-		// 	state.isLoggedIn = false;
-		// 	state.user = null;
-		// },
+
+		// logout
+		[logout.fulfilled]: (state, action) => {
+			state.loading = false;
+			state.user = null;
+		},
 	},
 });
 

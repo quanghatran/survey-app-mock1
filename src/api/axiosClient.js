@@ -9,18 +9,8 @@ const axiosClient = axios.create({
 	paramsSerializer: (params) => queryString.stringify(params),
 });
 
-// axiosClient.interceptors.request.use(async (config) => {
-// 	//handle token here
-// 	// const currentUser = firebase.auth().currentUser;
-// 	// if (currentUser) {
-// 	// 	const token = await currentUser.getToken();
-// 	// 	config.headers.Authorization = `Bearer ${token}`;
-// 	// }
-// 	// return config;
-// });
-
 axiosClient.interceptors.request.use(async (config) => {
-	const token = await localStorage.getItem("token");
+	const token = await localStorage.getItem("access_token");
 	if (token) {
 		config.headers.Authorization = `Bearer ${token}`;
 	}
@@ -36,6 +26,18 @@ axiosClient.interceptors.response.use(
 		return response;
 	},
 	(error) => {
+		// handle fetch refresh token to get new access token
+		// async function (error) {
+		// 	const originalRequest = error.config;
+		// 	if (error.response.status === 401 && !originalRequest._retry) {
+		// 		originalRequest._retry = true;
+		// 		const access_token = await refreshAccessToken();
+		// 		axios.defaults.headers.common["Authorization"] = "Bearer " + access_token;
+		// 		return axiosClient(originalRequest);
+		// 	}
+		// 	return Promise.reject(error);
+		// }
+
 		// handle error here
 		throw Error;
 	}
