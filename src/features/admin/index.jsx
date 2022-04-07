@@ -2,7 +2,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { logout } from "../../app/userSlice";
+import { logout } from "../../app/authSlice";
 import TopMenu from "../../components/TopMenu";
 import "./admin.scss";
 import LeftMenu from "./components/LeftMenu";

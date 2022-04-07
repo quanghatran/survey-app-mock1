@@ -3,7 +3,7 @@ import { Typography } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { login, register } from "../../app/userSlice";
+import { login, register } from "../../app/authSlice";
 import NotFound from "../../components/NotFound";
 import "./auth.scss";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -15,7 +15,7 @@ export default function Auth() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const isLoading = useSelector((state) => state.user.loading);
+	const isLoading = useSelector((state) => state.auth.loading);
 
 	const handleLogin = async (values) => {
 		if (!values) return;

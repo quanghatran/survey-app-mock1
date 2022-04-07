@@ -25,14 +25,12 @@ const questionsApi = {
 		return axiosClient.post(url, payload);
 	},
 
-	adminUpdateQuestion: async (payload, id) => {
+	adminUpdateQuestion: async (id, payload) => {
 		const url = `${UPDATE_QUESTION}${id}`;
-
-		console.log(url);
 		return axiosClient.patch(url, payload);
 	},
 
-	adminDeleteQuestion: async (payload, id) => {
+	adminDeleteQuestion: async (id, payload) => {
 		const url = `${DELETE_QUESTION}${id}`;
 		return axiosClient.delete(url, payload);
 	},
@@ -42,7 +40,7 @@ const questionsApi = {
 		return axiosClient.get(url, payload);
 	},
 
-	adminGetQuestionById: async (payload, id) => {
+	adminGetQuestionById: async (id, payload) => {
 		const url = `${GET_QUESTIONS_BY_ID_ADMIN}${id}`;
 		return axiosClient.get(url, payload);
 	},

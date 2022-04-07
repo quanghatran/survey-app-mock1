@@ -41,7 +41,9 @@ export default function LefMenu() {
 					<Menu.Item key='5'>
 						<Link to='/admin/questions'>Show List Question</Link>
 					</Menu.Item>
-					<Menu.Item key='6'>Create Question</Menu.Item>
+					<Menu.Item key='6'>
+						<Link to='/admin/questions/create'>Create Question</Link>
+					</Menu.Item>
 				</SubMenu>
 			</Menu>
 		</div>
