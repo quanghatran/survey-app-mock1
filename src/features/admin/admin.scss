@@ -1,10 +1,12 @@
 .adminPageWrapper {
 	display: flex;
 	flex-direction: column;
+	width: 100vw;
 }
 
 .contentPage {
 	margin: 40px 40px 0 40px;
+	width: 100%;
 }
 
 .contentWrapper {

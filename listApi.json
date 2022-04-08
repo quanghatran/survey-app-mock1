@@ -1,0 +1,165 @@
+{
+	"info": {
+		"_postman_id": "c5a9d78f-1223-470c-9106-01ebe8d7e44e",
+		"name": "Mock1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"xxx\",\r\n    \"password\": \"pass1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/v1/auth/login",
+							"host": ["{{url}}"],
+							"path": ["v1", "auth", "login"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RefreshToken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MjNkOThhM2FlZjYxYTAwMjE2OWQzNWIiLCJpYXQiOjE2NDgyMDQwMjIsImV4cCI6MTY1MDc5NjAyMiwidHlwZSI6InJlZnJlc2gifQ.8ImdQQ_TuCww26LuWU7c4S1J-d22mS2-awqklWLjMZU\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/v1/auth/refresh-tokens",
+							"host": ["{{url}}"],
+							"path": ["v1", "auth", "refresh-tokens"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Question",
+			"item": [
+				{
+					"name": "Get Question Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessTokenUser}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/v1/questions?page=1&limit=4",
+							"host": ["{{url}}"],
+							"path": ["v1", "questions"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit Answer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessTokenUser}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id\": \"6246d383d1051a002177a35f\",\r\n        \"correctanswer\": \"2\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/v1/questions/submit",
+							"host": ["{{url}}"],
+							"path": ["v1", "questions", "submit"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessTokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"xxxx\",\r\n    \"password\": \"pass1234\",\r\n    \"email\": \"xxxx@gmail.com\",\r\n    \"role\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/v1/users/",
+							"host": ["{{url}}"],
+							"path": ["v1", "users", ""]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

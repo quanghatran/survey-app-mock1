@@ -2,49 +2,31 @@ import {
 	QuestionCircleOutlined,
 	SettingOutlined,
 	UserOutlined,
-	MenuFoldOutlined,
-	MenuUnfoldOutlined,
 } from "@ant-design/icons";
-import { Button, Menu, Typography } from "antd";
-import React, { useState } from "react";
+import { Menu } from "antd";
+import React from "react";
 import { Link } from "react-router-dom";
 import "./LeftMenu.scss";
 
 export default function LefMenu() {
-	const { SubMenu } = Menu;
-
 	return (
 		<div className='menuWrapper'>
 			<Menu
 				className='listMenu'
-				defaultSelectedKeys={["3"]}
-				defaultOpenKeys={["users", "questions"]}
+				defaultSelectedKeys={["1"]}
+				defaultOpenKeys={["account"]}
 				mode='inline'>
-				<SubMenu key='account' icon={<SettingOutlined />} title='Account'>
-					<Menu.Item key='1'>Information</Menu.Item>
-					<Menu.Item key='2'>Edit</Menu.Item>
-				</SubMenu>
+				<Menu.Item key='1' icon={<SettingOutlined />}>
+					<Link to='/admin/info'> Account</Link>
+				</Menu.Item>
 
-				<SubMenu key='users' icon={<UserOutlined />} title='Users Management'>
-					<Menu.Item key='3'>
-						<Link to='/admin/users'> Show List User</Link>
-					</Menu.Item>
-					<Menu.Item key='4'>
-						<Link to='/admin/users/create'> Create User</Link>
-					</Menu.Item>
-				</SubMenu>
+				<Menu.Item key='2' icon={<UserOutlined />}>
+					<Link to='/admin/users'> Users Management</Link>
+				</Menu.Item>
 
-				<SubMenu
-					key='questions'
-					icon={<QuestionCircleOutlined />}
-					title='Questions Management'>
-					<Menu.Item key='5'>
-						<Link to='/admin/questions'>Show List Question</Link>
-					</Menu.Item>
-					<Menu.Item key='6'>
-						<Link to='/admin/questions/create'>Create Question</Link>
-					</Menu.Item>
-				</SubMenu>
+				<Menu.Item key='3' icon={<QuestionCircleOutlined />}>
+					<Link to='/admin/questions'>Questions Management</Link>
+				</Menu.Item>
 			</Menu>
 		</div>
 	);

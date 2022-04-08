@@ -38,7 +38,7 @@ export default function Auth() {
 			const role = result.role;
 
 			if (role === "admin") {
-				navigate("/admin/users");
+				navigate("/admin/info");
 			} else if (role === "user") {
 				navigate("/");
 			}
@@ -74,7 +74,7 @@ export default function Auth() {
 			const role = result.role;
 
 			if (role === "admin") {
-				navigate("/admin/users");
+				navigate("/admin/info");
 			} else if (role === "user") {
 				navigate("/");
 			}

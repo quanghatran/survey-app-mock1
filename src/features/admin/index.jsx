@@ -6,8 +6,9 @@ import { logout } from "../../app/authSlice";
 import TopMenu from "../../components/TopMenu";
 import "./admin.scss";
 import LeftMenu from "./components/LeftMenu";
+import InfoPage from "./pages/InfoPage";
 import QuestionsPage from "./pages/QuestionsPage";
-import ListUsersPage from "./pages/UsersPage";
+import UsersPage from "./pages/UsersPage";
 
 export default function Admin() {
 	const userName = localStorage.getItem("user_name");
@@ -42,7 +43,9 @@ export default function Admin() {
 				</div>
 				<div className='contentPage'>
 					<Routes>
-						<Route path='/users' element={<ListUsersPage />} />
+						<Route path='/info' element={<InfoPage />} />
+
+						<Route path='/users' element={<UsersPage />} />
 						{/* <Route path='/users/add' element={<ListUsersPage />} /> */}
 						<Route path='/questions' element={<QuestionsPage />} />
 					</Routes>

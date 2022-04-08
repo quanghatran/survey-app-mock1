@@ -59,9 +59,6 @@ export default function Login(props) {
 					<NavLink className='login-form-forgot' to='/auth/forgotPassword'>
 						Forgot password
 					</NavLink>
-					{/* <a className='login-form-forgot' href=''>
-						Forgot password
-					</a> */}
 				</Form.Item>
 
 				<Form.Item>

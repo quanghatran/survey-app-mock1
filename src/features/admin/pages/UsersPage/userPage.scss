@@ -1,0 +1,32 @@
+.userContainer {
+	width: 100%;
+
+	.buttonAddUser {
+		margin-bottom: 2rem;
+	}
+}
+
+.boxUser {
+	min-width: 300px;
+	box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+
+	.userCard {
+		display: flex;
+		justify-content: space-between;
+
+		.userAvatar {
+			object-fit: cover;
+			box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+
+			width: 45px;
+			height: 45px;
+			border-radius: 50%;
+		}
+	}
+}
+
+.buttonWrapper {
+	margin-top: 2rem;
+	display: flex;
+	justify-content: space-between;
+}

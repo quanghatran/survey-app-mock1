@@ -1,0 +1,22 @@
+.container {
+	.buttonAddQuestion {
+		margin-bottom: 2rem;
+	}
+}
+
+.container .buttonQuestionsWrapper {
+	margin-top: 1rem;
+
+	.editButton {
+		margin-right: 1rem;
+	}
+}
+
+.questionWrapper {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	.questionBox {
+		min-width: 400px;
+	}
+}

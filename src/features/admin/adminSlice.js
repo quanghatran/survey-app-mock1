@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import questionsApi from "../../api/questionsApi";
+import userApi from "../../api/userApi";
 
 export const getListQuestion = createAsyncThunk(
 	"admin/getListQuestion",
@@ -9,6 +10,12 @@ export const getListQuestion = createAsyncThunk(
 		return response;
 	}
 );
+
+export const getListUser = createAsyncThunk("admin/getListUser", async () => {
+	const response = await userApi.getUsers();
+
+	return response;
+});
 
 const adminSlice = createSlice({
 	name: "admin",
@@ -23,6 +30,7 @@ const adminSlice = createSlice({
 		},
 	},
 	extraReducers: {
+		// handle get list user
 		[getListQuestion.pending]: (state) => {
 			state.loading = true;
 		},
@@ -32,6 +40,20 @@ const adminSlice = createSlice({
 			state.current = action.payload;
 		},
 		[getListQuestion.rejected]: (state, action) => {
+			state.loading = false;
+			state.error = action.error;
+		},
+
+		// handle get list user
+		[getListUser.pending]: (state) => {
+			state.loading = true;
+		},
+		[getListUser.fulfilled]: (state, action) => {
+			state.error = "";
+			state.loading = false;
+			state.current = action.payload;
+		},
+		[getListUser.rejected]: (state, action) => {
 			state.loading = false;
 			state.error = action.error;
 		},
