@@ -11,6 +11,7 @@ export const login = createAsyncThunk(
 
 		if (token) {
 			localStorage.setItem("access_token", token.access.token);
+			localStorage.setItem("access_expires", token.access.expires);
 			localStorage.setItem("refresh_token", token.refresh.token);
 			localStorage.setItem("role", response.user.role);
 			localStorage.setItem("user_name", response.user.username);
@@ -31,6 +32,7 @@ export const register = createAsyncThunk(
 
 		if (token) {
 			localStorage.setItem("access_token", token.access.token);
+			localStorage.setItem("access_expires", token.access.expires);
 			localStorage.setItem("refresh_token", token.refresh.token);
 			localStorage.setItem("role", response.user.role);
 			localStorage.setItem("user_name", response.user.username);

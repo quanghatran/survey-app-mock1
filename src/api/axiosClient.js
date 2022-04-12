@@ -1,5 +1,6 @@
 import axios from "axios";
 import queryString from "query-string";
+import { POST_REFRESH_TOKEN } from "../constants/auth";
 
 const axiosClient = axios.create({
 	baseURL: process.env.REACT_APP_API_URL,
@@ -9,14 +10,22 @@ const axiosClient = axios.create({
 	paramsSerializer: (params) => queryString.stringify(params),
 });
 
-axiosClient.interceptors.request.use(async (config) => {
-	const token = await localStorage.getItem("access_token");
-	if (token) {
-		config.headers.Authorization = `Bearer ${token}`;
-	}
+function refreshToken(data) {
+	return axiosClient.post(POST_REFRESH_TOKEN, data);
+}
 
-	return config;
-});
+axiosClient.interceptors.request.use(
+	async (req) => {
+		const access_token = localStorage.getItem("access_token");
+
+		req.headers.Authorization = `Bearer ${access_token}`;
+
+		return req;
+	},
+	(error) => {
+		return Promise.reject(error);
+	}
+);
 
 axiosClient.interceptors.response.use(
 	(response) => {
@@ -25,21 +34,23 @@ axiosClient.interceptors.response.use(
 		}
 		return response;
 	},
-	(error) => {
-		// handle fetch refresh token to get new access token
-		// async function (error) {
-		// 	const originalRequest = error.config;
-		// 	if (error.response.status === 401 && !originalRequest._retry) {
-		// 		originalRequest._retry = true;
-		// 		const access_token = await refreshAccessToken();
-		// 		axios.defaults.headers.common["Authorization"] = "Bearer " + access_token;
-		// 		return axiosClient(originalRequest);
-		// 	}
-		// 	return Promise.reject(error);
-		// }
+	async function handleRefreshToken(error) {
+		const access_token = localStorage.getItem("access_token");
+		const refresh_token = localStorage.getItem("refresh_token");
 
-		// handle error here
-		throw Error;
+		const data = {
+			refreshToken: refresh_token,
+		};
+
+		if (error.response.status === 401 && access_token) {
+			const response = await refreshToken(data);
+
+			localStorage.setItem("access_token", response.access.token);
+			localStorage.setItem("refresh_token", response.refresh.token);
+			return response;
+		}
+
+		return Promise.reject(error);
 	}
 );
 

@@ -4,18 +4,20 @@ import userApi from "../../api/userApi";
 
 export const getListQuestion = createAsyncThunk(
 	"admin/getListQuestion",
-	async () => {
-		const response = await questionsApi.adminGetQuestions();
-
+	async (params) => {
+		const response = await questionsApi.adminGetQuestions(params);
 		return response;
 	}
 );
 
-export const getListUser = createAsyncThunk("admin/getListUser", async () => {
-	const response = await userApi.getUsers();
+export const getListUser = createAsyncThunk(
+	"admin/getListUser",
+	async (params) => {
+		const response = await userApi.getUsers(params);
 
-	return response;
-});
+		return response;
+	}
+);
 
 const adminSlice = createSlice({
 	name: "admin",

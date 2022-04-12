@@ -6,7 +6,7 @@ import {
 import { Avatar, Card, Typography } from "antd";
 import React from "react";
 
-export default function InfoPage() {
+export default function InfoAccount() {
 	const { Meta } = Card;
 	const { Title } = Typography;
 
@@ -22,7 +22,7 @@ export default function InfoPage() {
 				cover={
 					<img
 						alt='example'
-						src='https://blog.richersounds.com/wp-content/uploads/2021/08/luca.jpg'
+						src='https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
 					/>
 				}
 				actions={[

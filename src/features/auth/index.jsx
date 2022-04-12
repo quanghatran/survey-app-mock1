@@ -29,17 +29,9 @@ export default function Auth() {
 			const loginResult = await dispatch(login(payload));
 			const result = unwrapResult(loginResult);
 
-			console.log("result: ", result);
-
-			// Usually, we have a getMe() endpoint to fully fetch all information needed for current logged in user
-			//  const getMeResult = await dispatch(getMe());
-			//  const loggedInUser = unwrapResult(resultAction); // MUST HAVE THIS LINE TO CATCH ERROR
-
-			const role = result.role;
-
-			if (role === "admin") {
+			if (result.role === "admin") {
 				navigate("/admin/info");
-			} else if (role === "user") {
+			} else if (result.role === "user") {
 				navigate("/");
 			}
 		} catch (error) {
@@ -71,11 +63,9 @@ export default function Auth() {
 
 			console.log("result: ", result);
 
-			const role = result.role;
-
-			if (role === "admin") {
+			if (result.role === "admin") {
 				navigate("/admin/info");
-			} else if (role === "user") {
+			} else if (result.role === "user") {
 				navigate("/");
 			}
 		} catch (error) {

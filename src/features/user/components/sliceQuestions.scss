@@ -1,0 +1,65 @@
+.sliceQuestionsWrapper {
+	background: rgb(237, 237, 237);
+	border-radius: 15px;
+	width: 70vw;
+	height: 50vh;
+	box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.05);
+}
+
+.swiper-slide {
+	// text-align: center;
+	font-size: 18px;
+	padding: 20px;
+
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+}
+
+.swiper-slide img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.titleQuestion {
+	font-size: 19px;
+	font-weight: 500;
+}
+
+.listSelections {
+	display: flex;
+	width: 600px;
+	height: 200px;
+	justify-content: space-around;
+
+	.groupSelection {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	span {
+		font-size: 18px;
+	}
+}
+
+.buttonUserQuestionsWrapper {
+	display: flex;
+	justify-content: center;
+	margin-top: 1rem;
+
+	.nextButton {
+		margin-left: 1rem;
+	}
+}

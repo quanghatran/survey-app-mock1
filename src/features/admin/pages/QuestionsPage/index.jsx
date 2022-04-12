@@ -1,5 +1,5 @@
 import { unwrapResult } from "@reduxjs/toolkit";
-import { Button, Radio, Space, Spin, Typography } from "antd";
+import { Button, Pagination, Radio, Space, Spin, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import questionsApi from "../../../../api/questionsApi";
@@ -14,6 +14,12 @@ export default function QuestionsPage(props) {
 	const { Title } = Typography;
 
 	const [listQuestion, setListQuestion] = useState([]);
+	const [pagination, setPagination] = useState({
+		page: null,
+		limit: null,
+		totalPage: null,
+		totalResults: null,
+	});
 	const [isModalAddEditVisible, setIsModalAddEditVisible] = useState(false);
 	const [isModalDeleteVisible, setIsModalDeleteVisible] = useState(false);
 	const [clickedAddEditId, setClickedAddEditId] = useState("");
@@ -44,11 +50,21 @@ export default function QuestionsPage(props) {
 	// get list question by admin
 	useEffect(() => {
 		const fetchListQuestion = async () => {
+			const params = {
+				page: 1,
+			};
+
 			try {
-				const listQuestion = await dispatch(getListQuestion());
+				const listQuestion = await dispatch(getListQuestion(params));
 
 				unwrapResult(listQuestion);
 
+				setPagination({
+					page: listQuestion.payload.page,
+					limit: listQuestion.payload.limit,
+					totalPage: listQuestion.payload.totalPages,
+					totalResults: listQuestion.payload.totalResults,
+				});
 				setListQuestion(listQuestion.payload.results);
 			} catch (error) {
 				console.log("failed to fetch product list: ", error);
@@ -106,6 +122,35 @@ export default function QuestionsPage(props) {
 		}
 	};
 
+	// handle pagination change
+	const handlePaginationChange = (page) => {
+		const params = {
+			page: page,
+		};
+		setListQuestion([]);
+
+		const fetchListQuestion = async () => {
+			try {
+				const listQuestion = await dispatch(getListQuestion(params));
+
+				unwrapResult(listQuestion);
+
+				setPagination({
+					page: listQuestion.payload.page,
+					limit: listQuestion.payload.limit,
+					totalPage: listQuestion.payload.totalPages,
+					totalResults: listQuestion.payload.totalResults,
+				});
+
+				setListQuestion(listQuestion.payload.results);
+			} catch (error) {
+				console.log("failed to fetch product list: ", error);
+			}
+		};
+
+		fetchListQuestion();
+	};
+
 	const handleOpenAddQuestion = () => {
 		setIsModalAddEditVisible(true);
 	};
@@ -124,72 +169,90 @@ export default function QuestionsPage(props) {
 					<Spin tip='Loading...' />
 				</div>
 			) : (
-				<div className='questionWrapper'>
-					{listQuestion &&
-						listQuestion.map((question, index) => (
-							<div className='questionBox' key={question.id}>
-								<Title level={4} type='success'>
-									Question {index + 1}
-								</Title>
-								<p>{question.question}</p>
-								<div className='listAnswer'>
-									<Radio.Group
-										disabled
-										// onChange={this.onChange}
-										value={question.correctanswer}>
-										<Space direction='vertical'>
-											<Radio value={question.answer1}>{question.answer1}</Radio>
-											<Radio value={question.answer2}>{question.answer2}</Radio>
-											<Radio value={question.answer3}>{question.answer3}</Radio>
-											<Radio value={question.answer4}>{question.answer4}</Radio>
-										</Space>
-									</Radio.Group>
+				<div>
+					{listQuestion.length > 0 && (
+						<div>
+							{listQuestion.map((question, index) => (
+								<div className='questionBox' key={question.id}>
+									<Title level={4} type='success'>
+										Question {index + 1}
+									</Title>
+									<p>{question.question}</p>
+									<div className='listAnswer'>
+										<Radio.Group
+											disabled
+											// onChange={this.onChange}
+											value={question.correctanswer}>
+											<Space direction='vertical'>
+												<Radio value={question.answer1}>
+													{question.answer1}
+												</Radio>
+												<Radio value={question.answer2}>
+													{question.answer2}
+												</Radio>
+												<Radio value={question.answer3}>
+													{question.answer3}
+												</Radio>
+												<Radio value={question.answer4}>
+													{question.answer4}
+												</Radio>
+											</Space>
+										</Radio.Group>
+									</div>
+
+									<div className='buttonQuestionsWrapper'>
+										<Button
+											onClick={(e) => {
+												onClickEdit(question.id);
+											}}
+											className='editButton'
+											type='primary'>
+											Edit
+										</Button>
+										<Button
+											onClick={(e) => {
+												onClickDelete(question.id);
+											}}
+											className='deleteButton'
+											type='primary'
+											danger>
+											Delete
+										</Button>
+									</div>
+
+									{/* modal add edit */}
+									{question.id === clickedAddEditId && (
+										<AddEditQuestion
+											isVisible={isModalAddEditVisible}
+											onCancel={handleAddEditCancel}
+											idQuestion={question.id}
+											dataQuestion={dataQuestion}
+											handleUpdateQuestion={handleUpdateQuestion}
+										/>
+									)}
+
+									{/* modal popup confirm */}
+									{question.id === clickedDeleteId && (
+										<PopupConfirm
+											isVisible={isModalDeleteVisible}
+											idQuestion={question.id}
+											onCancel={handleDeleteCancel}
+											handleOkDelete={handleOkDelete}
+											messagePopup='want to delete this question ?'
+										/>
+									)}
+									<br />
 								</div>
-
-								<div className='buttonQuestionsWrapper'>
-									<Button
-										onClick={(e) => {
-											onClickEdit(question.id);
-										}}
-										className='editButton'
-										type='primary'>
-										Edit
-									</Button>
-									<Button
-										onClick={(e) => {
-											onClickDelete(question.id);
-										}}
-										className='deleteButton'
-										type='primary'
-										danger>
-										Delete
-									</Button>
-								</div>
-
-								{/* modal add edit */}
-								{question.id === clickedAddEditId && (
-									<AddEditQuestion
-										isVisible={isModalAddEditVisible}
-										onCancel={handleAddEditCancel}
-										idQuestion={question.id}
-										dataQuestion={dataQuestion}
-										handleUpdateQuestion={handleUpdateQuestion}
-									/>
-								)}
-
-								{/* modal popup confirm */}
-								{question.id === clickedDeleteId && (
-									<PopupConfirm
-										isVisible={isModalDeleteVisible}
-										idQuestion={question.id}
-										onCancel={handleDeleteCancel}
-										handleOkDelete={handleOkDelete}
-										messagePopup='want to delete this question ?'
-									/>
-								)}
-								<br />
-							</div>
-						))}
+							))}
+							<Pagination
+								className='pagination'
+								defaultCurrent={pagination.page}
+								total={pagination.totalResults}
+								hideOnSinglePage
+								onChange={handlePaginationChange}
+							/>
+						</div>
+					)}
 					<AddEditQuestion
 						isVisible={isModalAddEditVisible}
 						onCancel={handleAddEditCancel}

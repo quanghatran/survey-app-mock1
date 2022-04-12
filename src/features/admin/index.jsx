@@ -3,10 +3,10 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { logout } from "../../app/authSlice";
+import InfoAccount from "../../components/InfoAccount";
 import TopMenu from "../../components/TopMenu";
 import "./admin.scss";
 import LeftMenu from "./components/LeftMenu";
-import InfoPage from "./pages/InfoPage";
 import QuestionsPage from "./pages/QuestionsPage";
 import UsersPage from "./pages/UsersPage";
 
@@ -43,10 +43,8 @@ export default function Admin() {
 				</div>
 				<div className='contentPage'>
 					<Routes>
-						<Route path='/info' element={<InfoPage />} />
-
+						<Route path='/info' element={<InfoAccount />} />
 						<Route path='/users' element={<UsersPage />} />
-						{/* <Route path='/users/add' element={<ListUsersPage />} /> */}
 						<Route path='/questions' element={<QuestionsPage />} />
 					</Routes>
 				</div>

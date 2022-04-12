@@ -10,9 +10,9 @@ import {
 import axiosClient from "./axiosClient";
 
 const questionsApi = {
-	userGetQuestions: () => {
+	userGetQuestions: (params) => {
 		const url = GET_QUESTIONS_USER;
-		return axiosClient.get(url);
+		return axiosClient.get(url, { params });
 	},
 
 	userSubmitAnswers: (payload) => {
@@ -35,9 +35,9 @@ const questionsApi = {
 		return axiosClient.delete(url, payload);
 	},
 
-	adminGetQuestions: async (payload) => {
+	adminGetQuestions: async (params) => {
 		const url = GET_QUESTIONS_ADMIN;
-		return axiosClient.get(url, payload);
+		return axiosClient.get(url, { params });
 	},
 
 	adminGetQuestionById: async (id, payload) => {
