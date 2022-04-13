@@ -11,7 +11,7 @@ export default function UpdateUser(props) {
 	return (
 		<Modal
 			layout='vertical'
-			title='Create User'
+			title='Update User'
 			visible={isVisible}
 			onCancel={onCancel}
 			footer={""}>

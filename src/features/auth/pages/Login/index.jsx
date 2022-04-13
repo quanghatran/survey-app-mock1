@@ -65,15 +65,14 @@ export default function Login(props) {
 					<Button
 						type='primary'
 						htmlType='submit'
-						className='login-form-button'>
+						className='login-form-button'
+						loading={isLoadingLogging}>
 						Log in
 					</Button>
 					<span className='optionRegister'>
-						{/* Or <a href=''>register now!</a> */}
 						<NavLink to='/auth/register'>register now!</NavLink>
 					</span>
 				</Form.Item>
-				{isLoadingLogging && <Spin tip='Loading...' />}
 			</Form>
 		</div>
 	);

@@ -4,11 +4,11 @@ export const MENU_USER = [
 		href: "/",
 		title: "Survey",
 	},
-	{
-		id: 2,
-		href: "/result",
-		title: "Result",
-	},
+	// {
+	// 	id: 2,
+	// 	href: "/result",
+	// 	title: "Result",
+	// },
 	{
 		id: 3,
 		href: "/info",

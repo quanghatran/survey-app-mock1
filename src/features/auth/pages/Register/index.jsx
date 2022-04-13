@@ -1,5 +1,5 @@
-import { LockOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Spin, Typography } from "antd";
+import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Typography } from "antd";
 import React from "react";
 import { NavLink } from "react-router-dom";
 // import "./login.scss";
@@ -77,7 +77,8 @@ export default function Login(props) {
 					<Button
 						type='primary'
 						htmlType='submit'
-						className='login-form-button'>
+						className='login-form-button'
+						loading={isLoadingRegister}>
 						Register
 					</Button>
 					<span className='optionRegister'>
@@ -85,7 +86,6 @@ export default function Login(props) {
 						<NavLink to='/auth/login'>Already have an account?</NavLink>
 					</span>
 				</Form.Item>
-				{isLoadingRegister && <Spin tip='Loading...' />}
 			</Form>
 		</div>
 	);

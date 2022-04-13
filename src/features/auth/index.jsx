@@ -1,6 +1,6 @@
 import { unwrapResult } from "@reduxjs/toolkit";
 import { Typography } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { login, register } from "../../app/authSlice";
@@ -9,6 +9,7 @@ import "./auth.scss";
 import ForgotPassword from "./pages/ForgotPassword";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Auth() {
 	const { Title } = Typography;
@@ -35,16 +36,15 @@ export default function Auth() {
 				navigate("/");
 			}
 		} catch (error) {
-			console.log("failed to fetch: ", error.message);
-			// toast.error(error.message, {
-			// 	position: "top-right",
-			// 	autoClose: 1500,
-			// 	hideProgressBar: false,
-			// 	closeOnClick: true,
-			// 	pauseOnHover: true,
-			// 	draggable: true,
-			// 	progress: undefined,
-			// });
+			toast.error("Incorrect Username or Password!", {
+				position: "top-right",
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 	};
 
@@ -69,13 +69,21 @@ export default function Auth() {
 				navigate("/");
 			}
 		} catch (error) {
-			console.log("failed to fetch: ", error.message);
+			toast.error("Failed To Register, Please Try Again!", {
+				position: "top-right",
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 	};
 
 	return (
 		<div className='wrapperForm'>
-			{/* <Toaster /> */}
+			<ToastContainer />
 			<Title>Welcome To Survey App</Title>
 
 			<Routes>

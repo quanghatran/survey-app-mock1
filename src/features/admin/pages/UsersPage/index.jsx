@@ -7,6 +7,7 @@ import { getListUser } from "../../adminSlice";
 import AddUser from "./AddUser";
 import UpdateUser from "./UpdateUser";
 import "./userPage.scss";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function UsersPage() {
 	const dispatch = useDispatch();
@@ -88,7 +89,15 @@ export default function UsersPage() {
 			setIsDataChange(!isDataChange);
 			setIsModalAddVisible(false);
 		} catch (error) {
-			console.log("failed to fetch product list: ", error);
+			toast.error("Filed to create new user", {
+				position: "top-right",
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 	};
 
@@ -123,6 +132,8 @@ export default function UsersPage() {
 
 	return (
 		<div className='userContainer'>
+			<ToastContainer />
+
 			<Button
 				onClick={handleOpenAddUser}
 				className='buttonAddUser'

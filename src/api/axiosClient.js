@@ -35,6 +35,10 @@ axiosClient.interceptors.response.use(
 		return response;
 	},
 	async function handleRefreshToken(error) {
+		const originalConfig = error.config;
+		console.log(originalConfig);
+		console.log(originalConfig._retry);
+
 		const access_token = localStorage.getItem("access_token");
 		const refresh_token = localStorage.getItem("refresh_token");
 
@@ -42,7 +46,8 @@ axiosClient.interceptors.response.use(
 			refreshToken: refresh_token,
 		};
 
-		if (error.response.status === 401 && access_token) {
+		if (error.response.status === 401 && !originalConfig._retry) {
+			originalConfig._retry = true;
 			const response = await refreshToken(data);
 
 			localStorage.setItem("access_token", response.access.token);

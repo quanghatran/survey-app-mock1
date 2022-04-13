@@ -10,6 +10,15 @@ export const getListQuestionByUser = createAsyncThunk(
 	}
 );
 
+export const userSubmitAnswers = createAsyncThunk(
+	"user/userSubmitAnswers",
+	async (params, thunkAPI) => {
+		const response = await questionsApi.userSubmitAnswers(params);
+
+		return response;
+	}
+);
+
 const userSlice = createSlice({
 	name: "user",
 	initialState: {
@@ -29,6 +38,20 @@ const userSlice = createSlice({
 			state.current = action.payload;
 		},
 		[getListQuestionByUser.rejected]: (state, action) => {
+			state.loading = false;
+			state.error = action.error;
+		},
+
+		// handle user submit answers
+		[userSubmitAnswers.pending]: (state) => {
+			state.loading = true;
+		},
+		[userSubmitAnswers.fulfilled]: (state, action) => {
+			state.error = "";
+			state.loading = false;
+			state.current = action.payload;
+		},
+		[userSubmitAnswers.rejected]: (state, action) => {
 			state.loading = false;
 			state.error = action.error;
 		},
