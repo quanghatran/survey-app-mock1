@@ -1,15 +1,15 @@
 import { unwrapResult } from "@reduxjs/toolkit";
 import { Typography } from "antd";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { login, register } from "../../app/authSlice";
 import NotFound from "../../components/NotFound";
 import "./auth.scss";
 import ForgotPassword from "./pages/ForgotPassword";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { ToastContainer, toast } from "react-toastify";
 
 export default function Auth() {
 	const { Title } = Typography;

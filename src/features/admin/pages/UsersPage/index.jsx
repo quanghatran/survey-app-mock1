@@ -89,6 +89,7 @@ export default function UsersPage() {
 			setIsDataChange(!isDataChange);
 			setIsModalAddVisible(false);
 		} catch (error) {
+			console.log(error);
 			toast.error("Filed to create new user", {
 				position: "top-right",
 				autoClose: 1500,
